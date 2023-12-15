@@ -82,6 +82,7 @@
                     td = document.createElement("td");
                     btnDelete = document.createElement("button");
                     btnDelete.setAttribute("class", "btnDelete btn btn-danger");
+                    btnDelete.setAttribute("id", cont.id)
                     btnDelete.innerHTML = "Delete";
                     btnDelete.setAttribute("onclick", "deleteRow(this)");
                     td.appendChild(btnDelete);
@@ -94,7 +95,6 @@
         }
 
         async function addContact() {
-            console.log("si")
             cont = {}
             cont.name = document.getElementById("name").value;
             cont.email = document.getElementById("email").value;
@@ -111,6 +111,22 @@
         function deleteRow(btnDelete){
             row = btnDelete.parentNode.parentNode;
             row.parentNode.removeChild(row);
+
+            deleteContact(btnDelete.id)
+            loaded()
+        }
+
+        async function deleteContact(id){
+            await fetch(`http://127.0.0.1:8000/contacts/?id=${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then((res) => res.json())
+            .then((res) => 
+                console.log(res)
+            );
         }
 
         async function sendData(url, data){
