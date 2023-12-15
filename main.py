@@ -6,8 +6,6 @@ app = FastAPI(title="API contacts",
               description="This is the API contacts",
               version="1.0")
 
-app.include_router(contacts.root)
-
 origins = ["*"]
 
 app = FastAPI()
@@ -19,3 +17,5 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(contacts.root)
