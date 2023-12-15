@@ -17,7 +17,7 @@ async def get_contacts():
         
         return contacts_dict
     
-@root.post("/", status_code=status.HTTP_201_CREATED)
+@root.post("/", response_model=dict, status_code=status.HTTP_201_CREATED)
 async def post_contact(contact: Contact):
     with engine.connect() as conn:
         contact_dict = contact.dict()
@@ -32,3 +32,9 @@ async def post_contact(contact: Contact):
             result = dict(zip(columns, result))
             return result
         return {'response': status.HTTP_404_NOT_FOUND}
+    
+@root.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_contact(id: int):
+    with engine.connect() as conn:
+        conn.execute(contacts.delete().where(contacts.c.id == id))
+        conn.commit()
