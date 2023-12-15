@@ -1,10 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
+from routers import contacts
 
 app = FastAPI(title="API contacts", 
               description="This is the API contacts",
               version="1.0")
 
-from fastapi.middleware.cors import CORSMiddleware
+app.include_router(contacts.root)
 
 origins = ["*"]
 
