@@ -19,9 +19,10 @@ async def send_email(email_data: dict):
     msg['To'] = email_data["email"]
     msg['Subject'] = "Thanks for use my program"
     
-    tMessage = f'Hola mucho gusto'
+    with open("email.html", "r", encoding="utf-8") as file:
+        html = file.read()
     
-    email = MIMEText(tMessage,"plain")
+    email = MIMEText(html, "html")
     
     msg.attach(email)
     
