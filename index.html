@@ -46,6 +46,8 @@
     </table>
 
     <script>
+        let response = null;
+
         const buttonAdd = document.getElementById("btnAdd");
         buttonAdd.addEventListener("click", addContact, false);
 
@@ -106,6 +108,8 @@
 
             loaded()
             createTable()
+
+            sendEmail(response);
         }
 
         function deleteRow(btnDelete){
@@ -134,14 +138,13 @@
                 }
             })
             .then((res) => res.json())
-            .then((res) => 
-                sendEmail(res)
-            );
-            
+            .then((res) => {
+                response = res;
+            });
         }
 
         async function sendEmail(dataEmail) {
-            await fetch("http://127.0.0.1:8000/sendEmail", {
+            fetch("http://127.0.0.1:8000/sendEmail", {
                 method: "POST",
                 body: JSON.stringify(dataEmail),
                 headers: {
