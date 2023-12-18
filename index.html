@@ -139,9 +139,23 @@
             })
             .then((res) => res.json())
             .then((res) => 
-                console.log(res)
+                sendEmail(res)
             );
             
+        }
+
+        async function sendEmail(dataEmail) {
+            await fetch("http://127.0.0.1:8000/sendEmail", {
+                method: "POST",
+                body: JSON.stringify(dataEmail),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then((res) => res.json())
+            .then((res) => 
+                console.log(res)
+            );
         }
 
         window.addEventListener("load", createTable, false);

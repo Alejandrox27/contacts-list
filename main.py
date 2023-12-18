@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from routers import contacts
+from routers import contacts, email
 
 app = FastAPI(title="API contacts", 
               description="This is the API contacts",
@@ -19,3 +19,5 @@ app.add_middleware(
 )
 
 app.include_router(contacts.root)
+
+app.include_router(email.root)
